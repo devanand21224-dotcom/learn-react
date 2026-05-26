@@ -19,3 +19,16 @@
 --Https
 --Tree shaking--remove unused code
 --different dev and prod bundles
+
+
+---Types of Export/Import
+
+1- Default EXPORT/IMPORT
+export default Component;
+import Component from 'path';
+
+2- Named EXPORT/IMPORT
+export const Component;
+import {Component} from 'path';
+
+
