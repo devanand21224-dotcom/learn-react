@@ -18,7 +18,7 @@
 
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Header from './components/Header'
+import Header from "./components/Header";
 import Body from "./components/Body";
 
 // const parent = React.createElement("div", { id: "parent" }, [
@@ -56,9 +56,7 @@ import Body from "./components/Body";
 //   return <h1>My name is functional component</h1>;
 // };
 
-
 // App.js
-
 
 const AppLayoutComponent = () => {
   return (

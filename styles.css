@@ -86,3 +86,19 @@ body {
   margin-bottom: 6px;
   color: #555;
 }
+
+.filter-btn {
+  background-color: #ff5722;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.filter-btn:hover {
+  background-color: #e64a19;
+  transform: scale(1.05);
+}
