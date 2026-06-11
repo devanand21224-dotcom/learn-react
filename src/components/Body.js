@@ -1,11 +1,17 @@
 import RestaurantCard from "./ResturantCard";
 import restaurantData from "../utilis/mockData";
 import { useState, useEffect } from "react";
+import ShimmerUi from "./ShimmerUi";
 
 const Body = () => {
   //local superpowerful state variable;
 
-  const [resData, setResData] = useState(restaurantData);
+  console.log(ShimmerUi, "sshhi");
+
+  const [resData, setResData] = useState([]);
+  const [serachText, setSearchText] = useState("");
+  //whenever state variable update, react triggers a reconcilliation cycle(rerenders)
+  console.log("body rerenders");
 
   //noraml js varibale
   // let restaurantData = [];
@@ -34,22 +40,55 @@ const Body = () => {
 
   useEffect(() => {
     console.log("useEffect called");
-    fetchData()
+    fetchData();
   }, []);
 
-  const fetchData = () =>{
-    
-  }
+  const fetchData = async () => {
+    const data = await fetch("https://namastedev.com/api/v1/listRestaurants");
+    const json = await data.json();
+    console.log(json);
+    // setResData(json);
+    setResData(
+      json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants,
+    );
+  };
 
   console.log("body rendered");
+  console.log(resData, "resdata");
+
+  if (resData.length === 0) {
+    return (
+      <>
+        <ShimmerUi />
+      </>
+    );
+  }
 
   return (
     <>
+      <div>
+        <input
+          type="text"
+          value={serachText}
+          onChange={(e) => {
+            setSearchText(e.target.value);
+          }}
+        />
+        <button
+          onClick={() => {
+            // filter the resturant card and update the ui
+            console.log(serachText);
+          }}
+        >
+          Search
+        </button>
+      </div>
       <button
         className="filter-btn"
         onClick={() => {
           const filteredData = resData.filter(
-            (res) => parseFloat(res.rating) > 4,
+            (res) => parseFloat(res?.info?.avgRatingString) > 4.5,
           );
           setResData(filteredData);
           console.log(restaurantData, "sssssss");
@@ -59,7 +98,10 @@ const Body = () => {
       </button>
       <div className="cardContainer">
         {resData.map((restaurant) => (
-          <RestaurantCard key={restaurant.id} resData={restaurant} />
+          <RestaurantCard
+            key={restaurant?.info.id}
+            resData={restaurant?.info}
+          />
         ))}
       </div>
     </>
