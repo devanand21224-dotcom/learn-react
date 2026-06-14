@@ -2,7 +2,7 @@ import { CLOUDINARY_URL } from "../utilis/contants";
 
 const RestaurantCard = ({ resData }) => {
   const { name, cuisines, avgRating, sla, cloudinaryImageId } = resData;
-  console.log(CLOUDINARY_URL, "CLOUDINARY_URL");
+  // console.log(CLOUDINARY_URL, "CLOUDINARY_URL");
 
   return (
     <div className="card">

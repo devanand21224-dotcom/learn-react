@@ -6,10 +6,12 @@ import ShimmerUi from "./ShimmerUi";
 const Body = () => {
   //local superpowerful state variable;
 
-  console.log(ShimmerUi, "sshhi");
+  // console.log(ShimmerUi, "sshhi");
 
   const [resData, setResData] = useState([]);
   const [serachText, setSearchText] = useState("");
+  const [filterResData, setFilterResData] = useState([])
+
   //whenever state variable update, react triggers a reconcilliation cycle(rerenders)
   console.log("body rerenders");
 
@@ -38,24 +40,30 @@ const Body = () => {
   //   },
   // ];
 
-  useEffect(() => {
-    console.log("useEffect called");
-    fetchData();
-  }, []);
 
   const fetchData = async () => {
     const data = await fetch("https://namastedev.com/api/v1/listRestaurants");
     const json = await data.json();
-    console.log(json);
+    // console.log(json);
     // setResData(json);
     setResData(
       json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
         ?.restaurants,
     );
+
+    setFilterResData( json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants)
+
+    
   };
 
-  console.log("body rendered");
-  console.log(resData, "resdata");
+  useEffect(() => {
+    // console.log("useEffect called");
+    fetchData();
+  }, []);
+
+
+  // console.log(resData, "resdata");
 
   if (resData.length === 0) {
     return (
@@ -64,6 +72,7 @@ const Body = () => {
       </>
     );
   }
+  console.log(resData, "resdata")
 
   return (
     <>
@@ -79,6 +88,11 @@ const Body = () => {
           onClick={() => {
             // filter the resturant card and update the ui
             console.log(serachText);
+
+            const filterResturant = resData.filter((res) => res.info.name.toLowerCase().includes(serachText.toLowerCase()))
+            setFilterResData(filterResturant)
+            
+
           }}
         >
           Search
@@ -90,14 +104,13 @@ const Body = () => {
           const filteredData = resData.filter(
             (res) => parseFloat(res?.info?.avgRatingString) > 4.5,
           );
-          setResData(filteredData);
-          console.log(restaurantData, "sssssss");
+           setFilterResData(filteredData)
         }}
       >
         Top Rated Restaurants
       </button>
       <div className="cardContainer">
-        {resData.map((restaurant) => (
+        {filterResData.map((restaurant) => (
           <RestaurantCard
             key={restaurant?.info.id}
             resData={restaurant?.info}

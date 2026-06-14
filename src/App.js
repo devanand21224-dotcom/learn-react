@@ -20,6 +20,9 @@
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
+import { createBrowserRouter , RouterProvider} from "react-router-dom";
+import About from "./components/About";
+import Contact from "./components/Contact";
 
 // const parent = React.createElement("div", { id: "parent" }, [
 //   React.createElement("div", { id: "child", key: "child1" }, [
@@ -67,5 +70,22 @@ const AppLayoutComponent = () => {
   );
 };
 
+
+const appRouter = createBrowserRouter([
+
+  {
+    path: '/',
+    element: <AppLayoutComponent />
+  },
+  {
+    path: '/about',
+    element: <About/>
+  },{
+    path: '/contact',
+    element: <Contact/>
+  }
+
+])
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayoutComponent />);
+root.render(<RouterProvider router={appRouter} />);

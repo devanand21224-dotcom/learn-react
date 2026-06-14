@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { LOGO_URL } from "../utilis/contants";
 
 export const Header = () => {
   const [btnText, setBtnText] = useState("Login");
 
+  // if no dependency array ==> useEfffect called on every render
+  //if dependency array is empty ==> [] ====> useEffect is called on intial render(just once)
+
+  // if dependency array is something  ===> if something updated then useEffect called 
+
+  useEffect(()=>{
+    console.log("useEffect called ")
+  })
+
   return (
     <header className="header">
-      <div className="logoContainer">
+      {/* <div className="logoContainer">
         <img className="logo" src={LOGO_URL} alt="logo" />
         <h2>Food Villa</h2>
-      </div>
+      </div> */}
 
       <ul className="navItems">
         <li>Home</li>
