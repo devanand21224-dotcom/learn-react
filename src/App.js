@@ -20,9 +20,13 @@
 import ReactDOM from "react-dom/client";
 import Header from "./components/Header";
 import Body from "./components/Body";
-import { createBrowserRouter , RouterProvider} from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import About from "./components/About";
 import Contact from "./components/Contact";
+import ErrorComp from "./components/ErrorComp";
+import ResturantMenu from "./components/RestaurantMenu";
+// import Grocery from "./components/Grocery";
+import { lazy, Suspense } from "react";
 
 // const parent = React.createElement("div", { id: "parent" }, [
 //   React.createElement("div", { id: "child", key: "child1" }, [
@@ -61,11 +65,19 @@ import Contact from "./components/Contact";
 
 // App.js
 
+//Chunking
+//CODE SPILLITING
+//Dynamic bundling
+//Lazy laoding
+//On  demnad loading
+
+const Grocery = lazy(()=> import("./components/Grocery"))
+
 const AppLayoutComponent = () => {
   return (
     <div>
       <Header />
-      <Body />
+      <Outlet />
     </div>
   );
 };
@@ -75,15 +87,32 @@ const appRouter = createBrowserRouter([
 
   {
     path: '/',
-    element: <AppLayoutComponent />
+    element: <AppLayoutComponent />,
+    children: [
+      {
+        path: '/',
+        element: <Body />
+      },
+      {
+        path: '/about',
+        element: <About />
+      }, 
+      {
+        path: '/contact',
+        element: <Contact />
+      },
+       {
+        path: '/grocery',
+        element: <Suspense fallback={<h1>I am loading.....</h1>}><Grocery/></Suspense>  
+      },
+      {
+        path: '/resturants/:resId',
+        element: <ResturantMenu/>
+      }
+    ],
+    errorElement: <ErrorComp />
   },
-  {
-    path: '/about',
-    element: <About/>
-  },{
-    path: '/contact',
-    element: <Contact/>
-  }
+
 
 ])
 

@@ -2,6 +2,7 @@ import RestaurantCard from "./ResturantCard";
 import restaurantData from "../utilis/mockData";
 import { useState, useEffect } from "react";
 import ShimmerUi from "./ShimmerUi";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   //local superpowerful state variable;
@@ -26,7 +27,7 @@ const Body = () => {
   //     cuisine: "Burgers, Fast Food",
   //     rating: "4.3 ⭐",
   //     deliveryTime: "25 mins",
-  //     image:
+  //     image:restaurant?.info.id
   //       "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800",
   //   },
   //   {
@@ -51,10 +52,10 @@ const Body = () => {
         ?.restaurants,
     );
 
-    setFilterResData( json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
-        ?.restaurants)
+    setFilterResData(json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+      ?.restaurants)
 
-    
+
   };
 
   useEffect(() => {
@@ -91,7 +92,7 @@ const Body = () => {
 
             const filterResturant = resData.filter((res) => res.info.name.toLowerCase().includes(serachText.toLowerCase()))
             setFilterResData(filterResturant)
-            
+
 
           }}
         >
@@ -104,17 +105,21 @@ const Body = () => {
           const filteredData = resData.filter(
             (res) => parseFloat(res?.info?.avgRatingString) > 4.5,
           );
-           setFilterResData(filteredData)
+          setFilterResData(filteredData)
         }}
       >
         Top Rated Restaurants
       </button>
       <div className="cardContainer">
         {filterResData.map((restaurant) => (
-          <RestaurantCard
-            key={restaurant?.info.id}
-            resData={restaurant?.info}
-          />
+          <Link to={"/resturants/" + restaurant?.info.id }  key={restaurant?.info.id}>
+            <RestaurantCard
+              
+              resData={restaurant?.info}
+            />
+          </Link>
+
+
         ))}
       </div>
     </>

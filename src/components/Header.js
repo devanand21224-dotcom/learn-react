@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { LOGO_URL } from "../utilis/contants";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const [btnText, setBtnText] = useState("Login");
@@ -9,7 +10,7 @@ export const Header = () => {
 
   // if dependency array is something  ===> if something updated then useEffect called 
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log("useEffect called ")
   })
 
@@ -21,10 +22,31 @@ export const Header = () => {
       </div> */}
 
       <ul className="navItems">
-        <li>Home</li>
-        <li>Contact Us</li>
-        <li>About Us</li>
-        <li>Cart</li>
+        <li>
+          <Link to="/">
+            Home
+          </Link>
+        </li>
+        <li>
+          <Link to="/contact">
+            Contact Us
+          </Link>
+        </li>
+        <li>
+          <Link to="/about">
+            About Us
+          </Link>
+        </li>
+        <li>
+          <Link to="/cart" >
+             Cart
+          </Link>
+        </li>
+         <li>
+          <Link to="/grocery" >
+            Grocery
+          </Link>
+        </li>
         <li>
           <button
             className="btnText"

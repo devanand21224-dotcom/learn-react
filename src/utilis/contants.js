@@ -3,3 +3,6 @@ export const LOGO_URL =
 
 export const CLOUDINARY_URL =
   "https://media-assets.swiggy.com/swiggy/image/upload/";
+
+
+export const ResturantMenu_URL = "https://namastedev.com/api/v1/listRestaurantMenu/"
