@@ -1,8 +1,9 @@
-import RestaurantCard from "./ResturantCard";
+import RestaurantCard, { withVegLabelCard } from "./ResturantCard";
 import restaurantData from "../utilis/mockData";
-import { useState, useEffect } from "react";
+import { useState, useEffect , useContext} from "react";
 import ShimmerUi from "./ShimmerUi";
 import { Link } from "react-router-dom";
+import UserContext from "../utilis/UserContext";
 
 const Body = () => {
   //local superpowerful state variable;
@@ -13,8 +14,17 @@ const Body = () => {
   const [serachText, setSearchText] = useState("");
   const [filterResData, setFilterResData] = useState([])
 
+  const RestaurantVegCard = withVegLabelCard(RestaurantCard)
+
+  console.log(RestaurantVegCard, "RestaurantVegCard")
+
   //whenever state variable update, react triggers a reconcilliation cycle(rerenders)
   console.log("body rerenders");
+
+
+  const {loggedInUser, setUserName} = useContext(UserContext)
+
+  console.log(loggedInUser, 'data')
 
   //noraml js varibale
   // let restaurantData = [];
@@ -92,8 +102,6 @@ const Body = () => {
 
             const filterResturant = resData.filter((res) => res.info.name.toLowerCase().includes(serachText.toLowerCase()))
             setFilterResData(filterResturant)
-
-
           }}
         >
           Search
@@ -110,13 +118,24 @@ const Body = () => {
       >
         Top Rated Restaurants
       </button>
+
+      <div className="mt-3 ml-2">
+        <input value={loggedInUser} onChange={(e) => setUserName(e.target.value)} className="border  border-black pl-2" />
+      </div>
+
+
       <div className="cardContainer">
         {filterResData.map((restaurant) => (
-          <Link to={"/resturants/" + restaurant?.info.id }  key={restaurant?.info.id}>
-            <RestaurantCard
-              
-              resData={restaurant?.info}
-            />
+          <Link to={"/resturants/" + restaurant?.info.id} key={restaurant?.info.id}>
+
+            {/* if the restaurant is veg then add a beg label to it */}
+            {
+              restaurant?.info?.veg ? <RestaurantVegCard resData={restaurant?.info} /> : <RestaurantCard
+                resData={restaurant?.info}
+              />
+            }
+
+
           </Link>
 
 

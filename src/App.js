@@ -26,7 +26,8 @@ import Contact from "./components/Contact";
 import ErrorComp from "./components/ErrorComp";
 import ResturantMenu from "./components/RestaurantMenu";
 // import Grocery from "./components/Grocery";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
+import UserContext from "./utilis/UserContext";
 
 // const parent = React.createElement("div", { id: "parent" }, [
 //   React.createElement("div", { id: "child", key: "child1" }, [
@@ -71,13 +72,36 @@ import { lazy, Suspense } from "react";
 //Lazy laoding
 //On  demnad loading
 
-const Grocery = lazy(()=> import("./components/Grocery"))
+const Grocery = lazy(() => import("./components/Grocery"))
 
 const AppLayoutComponent = () => {
+   
+   const [userName, setUserName] = useState("");
+
+
+   useEffect(()=>{
+       // API CALL
+
+       const data = {
+          name:"ANAND"
+       }
+
+      setUserName(data.name)
+     
+
+   }, [])
+
+
   return (
     <div>
-      <Header />
-      <Outlet />
+      <UserContext.Provider 
+      value={{
+        loggedInUser: userName , setUserName
+      }}>
+        <Header />
+        <Outlet />
+      </UserContext.Provider>
+
     </div>
   );
 };
@@ -96,18 +120,18 @@ const appRouter = createBrowserRouter([
       {
         path: '/about',
         element: <About />
-      }, 
+      },
       {
         path: '/contact',
         element: <Contact />
       },
-       {
+      {
         path: '/grocery',
-        element: <Suspense fallback={<h1>I am loading.....</h1>}><Grocery/></Suspense>  
+        element: <Suspense fallback={<h1>I am loading.....</h1>}><Grocery /></Suspense>
       },
       {
         path: '/resturants/:resId',
-        element: <ResturantMenu/>
+        element: <ResturantMenu />
       }
     ],
     errorElement: <ErrorComp />

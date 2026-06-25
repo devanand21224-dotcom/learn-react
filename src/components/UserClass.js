@@ -1,4 +1,5 @@
-import React from "react"
+import React from "react";
+import UserContext from "../utilis/UserContext";
 
 class UserClass extends React.Component {
 
@@ -40,6 +41,15 @@ class UserClass extends React.Component {
         return (
             <>
                 <h1> I am class based component  {name} ,{location}</h1> 
+                <div>
+                    loggedInUser-
+                   <UserContext.Consumer>
+                    {
+                        
+                        (data)=> <h1>welcome {data.loggedInUser}</h1>
+                    }
+                   </UserContext.Consumer>
+                </div>
                 <img src={avatar_url}/>
                 <p>{login}</p>
             </>

@@ -1,9 +1,15 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState , useContext} from "react";
 import { LOGO_URL } from "../utilis/contants";
 import { Link } from "react-router-dom";
+import UserContext from "../utilis/UserContext";
 
 export const Header = () => {
   const [btnText, setBtnText] = useState("Login");
+
+  const data = useContext(UserContext)
+  
+
+  console.log(data, "data")
 
   // if no dependency array ==> useEfffect called on every render
   //if dependency array is empty ==> [] ====> useEffect is called on intial render(just once)
@@ -46,6 +52,9 @@ export const Header = () => {
           <Link to="/grocery" >
             Grocery
           </Link>
+        </li>
+        <li>
+          {data.loggedInUser}
         </li>
         <li>
           <button
