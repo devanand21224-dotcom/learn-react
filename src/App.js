@@ -28,6 +28,8 @@ import ResturantMenu from "./components/RestaurantMenu";
 // import Grocery from "./components/Grocery";
 import { lazy, Suspense, useEffect, useState } from "react";
 import UserContext from "./utilis/UserContext";
+import { Provider } from "react-redux";
+import appStore from "./utilis/appStore";
 
 // const parent = React.createElement("div", { id: "parent" }, [
 //   React.createElement("div", { id: "child", key: "child1" }, [
@@ -75,33 +77,34 @@ import UserContext from "./utilis/UserContext";
 const Grocery = lazy(() => import("./components/Grocery"))
 
 const AppLayoutComponent = () => {
-   
-   const [userName, setUserName] = useState("");
+
+  const [userName, setUserName] = useState("");
 
 
-   useEffect(()=>{
-       // API CALL
+  useEffect(() => {
+    // API CALL
 
-       const data = {
-          name:"ANAND"
-       }
+    const data = {
+      name: "ANAND"
+    }
 
-      setUserName(data.name)
-     
+    setUserName(data.name)
 
-   }, [])
+
+  }, [])
 
 
   return (
     <div>
-      <UserContext.Provider 
-      value={{
-        loggedInUser: userName , setUserName
-      }}>
-        <Header />
-        <Outlet />
-      </UserContext.Provider>
-
+      <Provider store={appStore}>
+        <UserContext.Provider
+          value={{
+            loggedInUser: userName, setUserName
+          }}>
+          <Header />
+          <Outlet />
+        </UserContext.Provider>
+      </Provider>
     </div>
   );
 };

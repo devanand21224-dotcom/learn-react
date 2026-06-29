@@ -32,3 +32,13 @@ export const Component;
 import {Component} from 'path';
 
 
+# Redux toolkit
+
+--install @reduxjs/toolkit and react-redux
+--build our store
+--connect our store to app
+--slice(cartslice)
+--dispatch(action)
+-selector
+
+

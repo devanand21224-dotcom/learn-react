@@ -1,7 +1,21 @@
+import { useDispatch } from "react-redux"
+import { addItem } from "../utilis/cartSlice";
 
 
 const ItemList = ({ data }) => {
     console.log(data, "items")
+
+    const dispatch = useDispatch();
+
+    const handleAdditem = () => {
+        //dispatch an action
+        dispatch(addItem("pizaa"))
+
+
+    }
+
+        
+
     return (
         <div className="border-b-1 border-gray-100 shadow-xs p-2 rounded-4">
             {data.map((item, index) => {
@@ -28,7 +42,13 @@ const ItemList = ({ data }) => {
 
                         </div>
                         <div className="w-2/12 flex justify-end">
-                            <button className="border-orange-400 border rounded-[4px]  text-[12px] p-2 ">
+                            <button 
+                                //   onClick={handleAdditem} 
+                                  onClick = {() => handleAdditem(item)}
+                                //   onClick = {handleAdditem(item)}
+                                  
+                                  
+                                  className="border-orange-400 border rounded-[4px]  text-[12px] p-2 ">
                                 + Add
                             </button>
                         </div>

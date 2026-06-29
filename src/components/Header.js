@@ -2,6 +2,7 @@ import { useEffect, useState , useContext} from "react";
 import { LOGO_URL } from "../utilis/contants";
 import { Link } from "react-router-dom";
 import UserContext from "../utilis/UserContext";
+import { useSelector } from "react-redux";
 
 export const Header = () => {
   const [btnText, setBtnText] = useState("Login");
@@ -10,6 +11,11 @@ export const Header = () => {
   
 
   console.log(data, "data")
+
+
+  // subscribing to store  using selector
+
+  const cart = useSelector((store)=> store.cart.items)
 
   // if no dependency array ==> useEfffect called on every render
   //if dependency array is empty ==> [] ====> useEffect is called on intial render(just once)
@@ -44,8 +50,8 @@ export const Header = () => {
           </Link>
         </li>
         <li>
-          <Link to="/cart" >
-             Cart
+          <Link to="/cart" className="font-bold" >
+             Cart({cart.length})
           </Link>
         </li>
          <li>
